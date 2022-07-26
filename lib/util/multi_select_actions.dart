@@ -35,7 +35,9 @@ class MultiSelectActions<T> {
     if (val != null && val.trim().isNotEmpty) {
       List<MultiSelectItem<T>> filteredItems = [];
       for (var item in allItems) {
-        if (item.label.toLowerCase().contains(val.toLowerCase())) {
+        if (item.label.toLowerCase().contains(val.toLowerCase()) ||
+            item.subTitle!.toLowerCase().contains(val.toLowerCase())) {
+          //enable search also for subtitle
           filteredItems.add(item);
         }
       }

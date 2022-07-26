@@ -141,15 +141,56 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
       child: CheckboxListTile(
         checkColor: widget.checkColor,
         value: item.selected,
+        contentPadding: EdgeInsets.all(5),
         activeColor: widget.colorator != null
             ? widget.colorator!(item.value) ?? widget.selectedColor
             : widget.selectedColor,
-        title: Text(
-          item.label,
-          style: item.selected
-              ? widget.selectedItemsTextStyle
-              : widget.itemsTextStyle,
+        title: ListTile(
+          contentPadding: EdgeInsets.zero,
+          minLeadingWidth: 5,
+          leading: Container(
+            // padding: const EdgeInsets.only(top: 5),
+            height: 40,
+            width: 40,
+            child: ClipOval(
+              // radius: 15,
+              child: FadeInImage.assetNetwork(
+                placeholder:
+                    '/Please_ignore_it_is_error_in_multi_select_flutter',
+                placeholderErrorBuilder: (context, error, stackTrace) {
+                  return CircularProgressIndicator.adaptive(
+                    strokeWidth: 2,
+                  );
+                },
+                image: item.imgUrl!,
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Icon(Icons.image_not_supported_outlined));
+                },
+              ),
+            ),
+          ),
+          title: Text(
+            item.label,
+            style: item.selected
+                ? widget.selectedItemsTextStyle
+                : widget.itemsTextStyle,
+          ),
+          subtitle: Text(
+            item.subTitle ?? '',
+            style: item.selected
+                ? widget.selectedItemsTextStyle
+                : widget.itemsTextStyle,
+          ),
         ),
+        // Text(
+        //   item.label,
+        //   style: item.selected
+        //       ? widget.selectedItemsTextStyle
+        //       : widget.itemsTextStyle,
+        // ),
         controlAffinity: ListTileControlAffinity.leading,
         onChanged: (checked) {
           setState(() {
@@ -256,6 +297,7 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
                       )
                     : widget.title ?? Text("Select"),
                 IconButton(
+                  splashRadius: 18,
                   icon: _showSearch
                       ? widget.closeSearchIcon ?? Icon(Icons.close)
                       : widget.searchIcon ?? Icon(Icons.search),

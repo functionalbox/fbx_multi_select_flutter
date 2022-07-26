@@ -277,6 +277,7 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
                             ),
                     widget.searchable
                         ? IconButton(
+                            splashRadius: 18,
                             icon: _showSearch
                                 ? widget.closeSearchIcon ?? Icon(Icons.close)
                                 : widget.searchIcon ?? Icon(Icons.search),
